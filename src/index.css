@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.bg-blue-gradient {
+  background: linear-gradient(to right, #4b61fb 0%, #4b61fb 100%)
+}
+
+
+.main-full {
+    height: calc(100vh - 102px);
+  }
+
+  .main-lib-full {
+    height: calc(100vh - 190px);
+  }
+  
+  
+.main-full-auth {
+    height: calc(100vh - 111.979px);
+}
+  
