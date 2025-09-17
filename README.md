@@ -52,6 +52,16 @@ This is a Library Management System with a React frontend and Node.js backend.
    npm run dev
    ```
 
+## Database Seeding
+
+To populate the database with sample data, use the following npm scripts:
+
+- `npm run seed:books` - Add sample books to the database
+- `npm run seed:students` - Add sample students to the database
+- `npm run seed:all` - Add both sample books and students to the database
+
+Note: These scripts will clear existing data before adding new data.
+
 ## Git and GitHub Setup
 
 1. Create a new repository on GitHub (do not initialize with README)
