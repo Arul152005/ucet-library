@@ -7,89 +7,93 @@ let students = [
 
 let nextId = 4;
 
+const Student = require('../models/Student');
+
 // Get all students
-const getAllStudents = (req, res) => {
-  res.json(students);
+const getAllStudents = async (req, res) => {
+  try {
+    const students = await Student.find({});
+    res.json(students);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 // Get a student by ID
-const getStudentById = (req, res) => {
-  const id = parseInt(req.params.id);
-  const student = students.find(student => student.id === id);
-  
-  if (!student) {
-    return res.status(404).json({ message: 'Student not found' });
+const getStudentById = async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+    
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    
+    res.json(student);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-  
-  res.json(student);
 };
 
 // Create a new student
-const createStudent = (req, res) => {
+const createStudent = async (req, res) => {
   const { name, email, studentId } = req.body;
   
-  if (!name || !email || !studentId) {
-    return res.status(400).json({ message: 'Name, email, and student ID are required' });
+  try {
+    const student = new Student({
+      name,
+      email,
+      studentId
+    });
+    
+    const newStudent = await student.save();
+    res.status(201).json(newStudent);
+  } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).json({ message: 'Student with this email or student ID already exists' });
+    }
+    res.status(400).json({ message: error.message });
   }
-  
-  // Check if student with same email or studentId already exists
-  const existingStudent = students.find(
-    student => student.email === email || student.studentId === studentId
-  );
-  
-  if (existingStudent) {
-    return res.status(409).json({ message: 'Student with this email or student ID already exists' });
-  }
-  
-  const newStudent = {
-    id: nextId++,
-    name,
-    email,
-    studentId
-  };
-  
-  students.push(newStudent);
-  res.status(201).json(newStudent);
 };
 
 // Update a student
-const updateStudent = (req, res) => {
-  const id = parseInt(req.params.id);
-  const studentIndex = students.findIndex(student => student.id === id);
-  
-  if (studentIndex === -1) {
-    return res.status(404).json({ message: 'Student not found' });
+const updateStudent = async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+    
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    
+    const { name, email, studentId } = req.body;
+    
+    if (name) student.name = name;
+    if (email) student.email = email;
+    if (studentId) student.studentId = studentId;
+    
+    const updatedStudent = await student.save();
+    res.json(updatedStudent);
+  } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).json({ message: 'Student with this email or student ID already exists' });
+    }
+    res.status(400).json({ message: error.message });
   }
-  
-  const { name, email, studentId } = req.body;
-  
-  // Check if another student already has this email or studentId
-  const duplicateStudent = students.find(
-    student => (student.email === email || student.studentId === studentId) && student.id !== id
-  );
-  
-  if (duplicateStudent) {
-    return res.status(409).json({ message: 'Another student with this email or student ID already exists' });
-  }
-  
-  if (name) students[studentIndex].name = name;
-  if (email) students[studentIndex].email = email;
-  if (studentId) students[studentIndex].studentId = studentId;
-  
-  res.json(students[studentIndex]);
 };
 
 // Delete a student
-const deleteStudent = (req, res) => {
-  const id = parseInt(req.params.id);
-  const studentIndex = students.findIndex(student => student.id === id);
-  
-  if (studentIndex === -1) {
-    return res.status(404).json({ message: 'Student not found' });
+const deleteStudent = async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id);
+    
+    if (!student) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+    
+    await student.remove();
+    res.json({ message: 'Student removed' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-  
-  students.splice(studentIndex, 1);
-  res.status(204).send();
 };
 
 module.exports = {

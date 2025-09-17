@@ -38,7 +38,16 @@ This is a Library Management System with a React frontend and Node.js backend.
    npm install
    ```
 
-3. Start the development server:
+3. Set up environment variables:
+   - Create a `.env` file in the backend directory
+   - Add your MongoDB connection string:
+     ```
+     MONGO_URI=your_mongodb_connection_string
+     PORT=5000
+     NODE_ENV=development
+     ```
+
+4. Start the development server:
    ```
    npm run dev
    ```
@@ -54,6 +63,19 @@ This is a Library Management System with a React frontend and Node.js backend.
    ```
    git push -u origin main
    ```
+
+## Database Schema
+
+### Books
+- `title` (String, required) - The title of the book
+- `author` (String, required) - The author of the book
+- `isbn` (String, required, unique) - The ISBN of the book
+- `available` (Boolean, default: true) - Availability status of the book
+
+### Students
+- `name` (String, required) - The name of the student
+- `email` (String, required, unique) - The email of the student
+- `studentId` (String, required, unique) - The student ID
 
 ## API Endpoints
 
