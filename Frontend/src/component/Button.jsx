@@ -8,11 +8,12 @@ const Button = ({
   onClick = () => {},
 }) => {
   const btnTypes = {
-    primary: `bg-blue-gradient text-white px-6 py-4 font-poppins text-[18px] font-medium text-primary outline-none ${styles} rounded-[10px] cursor-pointer`,
-    secondary: `bg-black-gradient px-6 py-4 font-poppins text-[18px] font-medium text-primary outline-none ${styles} rounded-[10px] text-white cursor-pointer`,
-    submit: `bg-blue-gradient text-white px-6 py-4 font-poppins text-[18px] font-medium text-primary outline-none ${styles} rounded-[10px] cursor-pointer`,
-    small: `bg-blue-gradient px-4 py-2 font-poppins text-[14px] font-medium text-primary outline-none ${styles} rounded-[10px] cursor-pointer`,
+    primary: `bg-secondary text-white px-6 py-3 font-poppins text-[16px] font-medium outline-none ${styles} rounded-lg cursor-pointer transition-all duration-200 hover:bg-secondary/90 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-md`,
+    secondary: `bg-primary text-white px-6 py-3 font-poppins text-[16px] font-medium outline-none ${styles} rounded-lg cursor-pointer transition-all duration-200 hover:bg-primary/90 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-md`,
+    submit: `bg-secondary text-white px-6 py-3 font-poppins text-[16px] font-medium outline-none ${styles} rounded-lg cursor-pointer transition-all duration-200 hover:bg-secondary/90 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-md`,
+    small: `bg-secondary px-4 py-2 font-poppins text-[14px] font-medium text-white outline-none ${styles} rounded-lg cursor-pointer transition-all duration-200 hover:bg-secondary/90 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed shadow-sm`,
   };
+  
   return (
     <button
       type={`button ${type === "submit" ? "submit" : ""}`}
@@ -27,6 +28,10 @@ const Button = ({
 
 Button.propTypes = {
   styles: PropTypes.string,
+  type: PropTypes.oneOf(["primary", "secondary", "submit", "small"]),
+  disabled: PropTypes.bool,
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func,
 };
 
 export default Button;

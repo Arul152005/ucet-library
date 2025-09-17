@@ -21,7 +21,9 @@ const books = [
     title: 'To Kill a Mockingbird',
     author: 'Harper Lee',
     isbn: '978-0-06-112008-4',
-    available: false
+    available: false,
+    takenBy: 'STU002',
+    takenDate: new Date('2025-09-15')
   },
   {
     title: '1984',
@@ -45,7 +47,9 @@ const books = [
     title: 'Lord of the Flies',
     author: 'William Golding',
     isbn: '978-0-571-05686-2',
-    available: false
+    available: false,
+    takenBy: 'STU004',
+    takenDate: new Date('2025-09-10')
   },
   {
     title: 'The Hobbit',

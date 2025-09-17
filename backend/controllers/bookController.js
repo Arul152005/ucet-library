@@ -65,12 +65,32 @@ const updateBook = async (req, res) => {
       return res.status(404).json({ message: 'Book not found' });
     }
     
-    const { title, author, isbn, available } = req.body;
+    const { title, author, isbn, available, takenBy, takenDate } = req.body;
     
     if (title) book.title = title;
     if (author) book.author = author;
     if (isbn) book.isbn = isbn;
-    if (available !== undefined) book.available = available;
+    
+    // Handle availability changes
+    if (available !== undefined) {
+      book.available = available;
+      
+      // If book is being borrowed (available -> false)
+      if (!available && takenBy) {
+        book.takenBy = takenBy;
+        book.takenDate = takenDate || new Date();
+      }
+      
+      // If book is being returned (available -> true)
+      if (available) {
+        book.takenBy = null;
+        book.takenDate = null;
+      }
+    }
+    
+    // Allow direct updating of takenBy and takenDate
+    if (takenBy !== undefined) book.takenBy = takenBy;
+    if (takenDate !== undefined) book.takenDate = takenDate;
     
     const updatedBook = await book.save();
     res.json(updatedBook);
@@ -98,10 +118,66 @@ const deleteBook = async (req, res) => {
   }
 };
 
+// Borrow a book (set available to false and add student info)
+const borrowBook = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id);
+    
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+    
+    if (!book.available) {
+      return res.status(400).json({ message: 'Book is already borrowed' });
+    }
+    
+    const { studentId } = req.body;
+    
+    if (!studentId) {
+      return res.status(400).json({ message: 'Student ID is required' });
+    }
+    
+    book.available = false;
+    book.takenBy = studentId;
+    book.takenDate = new Date();
+    
+    const updatedBook = await book.save();
+    res.json(updatedBook);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Return a book (set available to true and clear student info)
+const returnBook = async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id);
+    
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+    
+    if (book.available) {
+      return res.status(400).json({ message: 'Book is already available' });
+    }
+    
+    book.available = true;
+    book.takenBy = null;
+    book.takenDate = null;
+    
+    const updatedBook = await book.save();
+    res.json(updatedBook);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   getAllBooks,
   getBookById,
   createBook,
   updateBook,
-  deleteBook
+  deleteBook,
+  borrowBook,
+  returnBook
 };

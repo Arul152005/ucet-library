@@ -2,22 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .bg-blue-gradient {
-  background: linear-gradient(to right, #4b61fb 0%, #4b61fb 100%)
+  background: linear-gradient(to right, #4b61fb 0%, #4b61fb 100%);
 }
-
 
 .main-full {
-    height: calc(100vh - 102px);
-  }
-
-  .main-lib-full {
-    height: calc(100vh - 190px);
-  }
-  
-  
-.main-full-auth {
-    height: calc(100vh - 111.979px);
+  min-height: calc(100vh - 102px);
 }
-  
+
+.main-lib-full {
+  min-height: calc(100vh - 190px);
+}
+
+.main-full-auth {
+  min-height: calc(100vh - 111.979px);
+}
+
+/* Custom utility classes */
+.shadow-md {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.shadow-xl {
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}

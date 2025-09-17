@@ -8,7 +8,8 @@
     "dev": "nodemon server.js",
     "seed:books": "node seed-books.js",
     "seed:students": "node seed-students.js",
-    "seed:all": "npm run seed:books && npm run seed:students",
+    "seed:admins": "node seed-admins.js",
+    "seed:all": "npm run seed:books && npm run seed:students && npm run seed:admins",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -16,9 +17,12 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.19.0",
     "mongoose": "^8.18.1",
     "node-fetch": "^2.7.0"

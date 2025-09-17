@@ -1,30 +1,36 @@
-import { Outlet, useNavigation, useLocation } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
-import Loader from "./Loader";
+import { useAuth } from "../context/AuthContext";
 
 function AppLayout() {
-  const navigation = useNavigation();
-  const { pathname } = useLocation();
-//   const isAuthenticated = currentUser !== null;
-//   console.log(navigation.state, "navigation", pathname);
-//   const isLoading = navigation.state === "loading";
+  const { admin, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/AdminLogin");
+  };
 
   return (
-    <div
-     div className="min-h-screen" 
-    >
-      {/* {isLoading && <Loader />} */}
-      {/* {true && <Loader />} */}
-      <div >
-        <div >
+    <div className="min-h-screen">
+      <div>
+        <div className="relative">
           <Navbar />
+          {admin && (
+            <div className="absolute top-4 right-4">
+              <button
+                onClick={handleLogout}
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors duration-200"
+              >
+                Logout
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <main className="main-full">
         <Outlet />
       </main>
-
-      {/* <Footer /> */}
     </div>
   );
 }

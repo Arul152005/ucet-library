@@ -8,14 +8,17 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 
-  
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "#27374e",
     color: theme.palette.common.white,
+    fontWeight: 600,
+    fontSize: '16px',
+    padding: '16px',
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
+    padding: '14px',
   },
 }));
 
@@ -27,15 +30,18 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:last-child td, &:last-child th': {
     border: 0,
   },
+  '&:hover': {
+    backgroundColor: 'rgba(39, 55, 78, 0.08)',
+  },
 }));
 
 export default function LibraryTable({rows}) {
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <TableContainer component={Paper} className="rounded-xl shadow-md">
+      <Table sx={{ minWidth: 650 }} aria-label="library books table">
         <TableHead>
           <TableRow>
-            <StyledTableCell >Book Title</StyledTableCell>
+            <StyledTableCell>Book Title</StyledTableCell>
             <StyledTableCell align="right">Book Id</StyledTableCell>
             <StyledTableCell align="right">Borrowed Date</StyledTableCell>
             <StyledTableCell align="right">Return Deadline</StyledTableCell>
@@ -48,13 +54,17 @@ export default function LibraryTable({rows}) {
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
+              <StyledTableCell component="th" scope="row">
                 {row.bookTitle}
-              </TableCell>
-              <TableCell align="right">{row.bookId}</TableCell>
-              <TableCell align="right">{row.borrowedDate}</TableCell>
-              <TableCell align="right">{row.returnDeadline}</TableCell>
-              <TableCell align="right">{row.remainingDays}</TableCell>
+              </StyledTableCell>
+              <StyledTableCell align="right">{row.bookId}</StyledTableCell>
+              <StyledTableCell align="right">{row.borrowedDate}</StyledTableCell>
+              <StyledTableCell align="right">{row.returnDeadline}</StyledTableCell>
+              <StyledTableCell align="right">
+                <span className={`font-medium ${row.remainingDays < 3 ? 'text-red-500' : 'text-green-500'}`}>
+                  {row.remainingDays}
+                </span>
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

@@ -4,6 +4,11 @@ import AdminLogin from "./features/AdminLogin/AdminLogin";
 import StudentLogin from "./features/StudentLogin/StudentLogin";
 import AdminDashboard from "./features/AdminDashboard/AdminDashboard";
 import StudentDetails from "./features/AdminDashboard/StudentDetails";
+import BookManagement from "./features/AdminDashboard/components/BookManagement";
+import StudentManagement from "./features/AdminDashboard/components/StudentManagement";
+import StudentBorrowedBooks from "./features/AdminDashboard/StudentBorrowedBooks";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./component/ProtectedRoute";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -24,18 +29,53 @@ const App = () => {
         },
         {
           path: "/AdminDashboard",
-          element: <AdminDashboard />,
+          element: (
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "/studentdetails",
-          element: <StudentDetails />,
+          element: (
+            <ProtectedRoute>
+              <StudentDetails />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/books",
+          element: (
+            <ProtectedRoute>
+              <BookManagement />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/students",
+          element: (
+            <ProtectedRoute>
+              <StudentManagement />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/students/:id/borrowed-books",
+          element: (
+            <ProtectedRoute>
+              <StudentBorrowedBooks />
+            </ProtectedRoute>
+          ),
         }
-       
       ],
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
 };
 
 export default App;

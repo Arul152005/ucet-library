@@ -81,11 +81,14 @@ Note: These scripts will clear existing data before adding new data.
 - `author` (String, required) - The author of the book
 - `isbn` (String, required, unique) - The ISBN of the book
 - `available` (Boolean, default: true) - Availability status of the book
+- `takenBy` (String, default: null) - Student ID of who has taken the book
+- `takenDate` (Date, default: null) - Date when the book was taken
 
 ### Students
 - `name` (String, required) - The name of the student
 - `email` (String, required, unique) - The email of the student
 - `studentId` (String, required, unique) - The student ID
+- `borrowedBooks` (Array) - List of borrowed books with details
 
 ## API Endpoints
 
@@ -95,6 +98,8 @@ Note: These scripts will clear existing data before adding new data.
 - `POST /api/books` - Add a new book
 - `PUT /api/books/:id` - Update a book
 - `DELETE /api/books/:id` - Delete a book
+- `POST /api/books/:id/borrow` - Borrow a book (requires studentId in body)
+- `POST /api/books/:id/return` - Return a book
 
 ### Students
 - `GET /api/students` - Get all students
@@ -102,3 +107,5 @@ Note: These scripts will clear existing data before adding new data.
 - `POST /api/students` - Add a new student
 - `PUT /api/students/:id` - Update a student
 - `DELETE /api/students/:id` - Delete a student
+- `POST /api/students/:id/borrowed-books` - Add a borrowed book to a student
+- `DELETE /api/students/:id/borrowed-books` - Remove a borrowed book from a student

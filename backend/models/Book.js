@@ -20,6 +20,15 @@ const bookSchema = new mongoose.Schema({
   available: {
     type: Boolean,
     default: true
+  },
+  // New fields to track who has taken the book and when
+  takenBy: {
+    type: String,
+    default: null
+  },
+  takenDate: {
+    type: Date,
+    default: null
   }
 }, {
   timestamps: true
