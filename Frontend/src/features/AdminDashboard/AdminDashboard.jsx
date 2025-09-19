@@ -1,15 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 function AdminDashboard() {
   const [regNumber, setRegNumber] = useState('');
   const [error, setError] = useState('');
+  const regNumberInputRef = useRef(null);
 
   const navigate = useNavigate();
 
+  // Focus on the register number input field when component mounts
+  useEffect(() => {
+    if (regNumberInputRef.current) {
+      regNumberInputRef.current.focus();
+    }
+  }, []);
+
   const handleInputChange = (e) => {
-    setRegNumber(e.target.value);
+    const value = e.target.value;
+    
+    // Only allow numeric input
+    if (value === '' || /^\d+$/.test(value)) {
+      setRegNumber(value);
+    }
+    
     // Clear previous error when input changes
     setError('');
   };
@@ -17,6 +31,20 @@ function AdminDashboard() {
   const handleViewStudentDetails = () => {
     if (!regNumber.trim()) {
       setError('Please enter a register number');
+      // Focus on the input field when there's an error
+      if (regNumberInputRef.current) {
+        regNumberInputRef.current.focus();
+      }
+      return;
+    }
+    
+    // Check if register number is exactly 12 digits
+    if (regNumber.length !== 12) {
+      setError('Register number must be exactly 12 digits');
+      // Focus on the input field when there's an error
+      if (regNumberInputRef.current) {
+        regNumberInputRef.current.focus();
+      }
       return;
     }
     
@@ -27,6 +55,17 @@ function AdminDashboard() {
   const handleReset = () => {
     setRegNumber('');
     setError('');
+    // Focus on the input field after reset
+    if (regNumberInputRef.current) {
+      regNumberInputRef.current.focus();
+    }
+  };
+
+  // Handle Enter key press
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleViewStudentDetails();
+    }
   };
 
   return (
@@ -36,17 +75,23 @@ function AdminDashboard() {
         
         <div className="mb-8">
           <label htmlFor="regNumber" className="block text-lg font-medium text-primary mb-2">
-            Enter Register Number
+            Enter Register Number (12 digits)
           </label>
           <input
+            ref={regNumberInputRef}
             className="w-full rounded-lg border-2 border-[#D8DADC] p-3 focus:border-secondary focus:outline-none transition-colors duration-200"
             type="text"
             name="regNumber"
             id="regNumber"
-            placeholder="Enter Register Number"
+            placeholder="Enter 12-digit Register Number"
             onChange={handleInputChange}
+            onKeyPress={handleKeyPress}
             value={regNumber}
+            maxLength="12"
           />
+          <div className="text-sm text-gray-500 mt-1">
+            {regNumber.length}/12 digits
+          </div>
         </div>
         
         {error && (

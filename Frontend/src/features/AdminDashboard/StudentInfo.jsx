@@ -111,10 +111,10 @@ function StudentInfo({ regNumber }) {
                             <span className="font-medium text-gray-600">Phone:</span>
                             <span className="font-medium">{studentData.phone || 'N/A'}</span>
                         </p>
-                        <p className="flex justify-between">
-                            <span className="font-medium text-gray-600">Address:</span>
-                            <span className="font-medium">{studentData.address || 'N/A'}</span>
-                        </p>
+                        <div className="flex flex-col">
+                            <span className="font-medium text-gray-600 mb-1">Address:</span>
+                            <span className="font-medium break-words">{studentData.address || 'N/A'}</span>
+                        </div>
                     </div>
                 </div>
                 

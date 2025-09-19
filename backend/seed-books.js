@@ -9,18 +9,18 @@ dotenv.config();
 // Connect to database
 connectDB();
 
-// Sample book data
+// Sample book data with the new ISBN format
 const books = [
   {
     title: 'The Great Gatsby',
     author: 'F. Scott Fitzgerald',
-    isbn: '978-0-7432-7356-5',
+    isbn: '205.A.1.1',
     available: true
   },
   {
     title: 'To Kill a Mockingbird',
     author: 'Harper Lee',
-    isbn: '978-0-06-112008-4',
+    isbn: '205.A.1.2',
     available: false,
     takenBy: 'STU002',
     takenDate: new Date('2025-09-15')
@@ -28,25 +28,25 @@ const books = [
   {
     title: '1984',
     author: 'George Orwell',
-    isbn: '978-0-452-28423-4',
+    isbn: '205.A.1.3',
     available: true
   },
   {
     title: 'Pride and Prejudice',
     author: 'Jane Austen',
-    isbn: '978-0-14-143951-8',
+    isbn: '205.A.1.4',
     available: true
   },
   {
     title: 'The Catcher in the Rye',
     author: 'J.D. Salinger',
-    isbn: '978-0-316-76948-0',
+    isbn: '205.A.1.5',
     available: true
   },
   {
     title: 'Lord of the Flies',
     author: 'William Golding',
-    isbn: '978-0-571-05686-2',
+    isbn: '205.A.1.6',
     available: false,
     takenBy: 'STU004',
     takenDate: new Date('2025-09-10')
@@ -54,13 +54,13 @@ const books = [
   {
     title: 'The Hobbit',
     author: 'J.R.R. Tolkien',
-    isbn: '978-0-547-92822-7',
+    isbn: '205.A.1.7',
     available: true
   },
   {
     title: 'Harry Potter and the Sorcerer\'s Stone',
     author: 'J.K. Rowling',
-    isbn: '978-0-439-70818-8',
+    isbn: '205.A.1.8',
     available: true
   }
 ];

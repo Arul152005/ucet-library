@@ -42,6 +42,23 @@ const studentSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
+  // Parent Information
+  fatherName: {
+    type: String,
+    trim: true
+  },
+  motherName: {
+    type: String,
+    trim: true
+  },
+  fatherMobile: {
+    type: String,
+    trim: true
+  },
+  motherMobile: {
+    type: String,
+    trim: true
+  },
   // Scholarship Information
   scholarships: [{
     name: {
